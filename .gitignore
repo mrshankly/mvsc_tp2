@@ -1,3 +1,7 @@
 *SnapShot*
 .project
 .settings
+*.pdf
+*.tex
+*.aux
+*.log
