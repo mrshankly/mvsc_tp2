@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 64 and seed 3690713223499697454 with 1 worker on 4 cores with 1179MB heap and 2650MB offheap memory [pid: 8519] (Linux 5.0.0-37-generic amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 81 and seed -2257619925112277641 with 1 worker on 4 cores with 1179MB heap and 2650MB offheap memory [pid: 6744] (Linux 5.0.0-37-generic amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -25,56 +25,14 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2019-12-12 21:33:46)
+Starting... (2019-12-13 10:20:23)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2019-12-12 21:33:46.
+Finished computing initial states: 1 distinct state generated at 2019-12-13 10:20:24.
 @!@!@ENDMSG 2190 @!@!@
-@!@!@STARTMSG 2193:0 @!@!@
-Model checking completed. No error has been found.
-  Estimates of the probability that TLC did not check all reachable states
-  because two distinct states had the same fingerprint:
-  calculated (optimistic):  val = 5.4E-20
-@!@!@ENDMSG 2193 @!@!@
-@!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2019-12-12 21:33:46
-@!@!@ENDMSG 2201 @!@!@
-@!@!@STARTMSG 2773:0 @!@!@
-<Init line 68, col 1 to line 68, col 4 of module LeaderElection>: 1:1
-@!@!@ENDMSG 2773 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 9 to line 73, col 49 of module LeaderElection: 1
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2772:0 @!@!@
-<Next line 75, col 1 to line 75, col 4 of module LeaderElection>: 0:1
-@!@!@ENDMSG 2772 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 75, col 9 to line 75, col 22 of module LeaderElection: 1
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2774:0 @!@!@
-<TypeInvariant line 59, col 1 to line 59, col 13 of module LeaderElection>
-@!@!@ENDMSG 2774 @!@!@
-@!@!@STARTMSG 2221:0 @!@!@
-  line 59, col 18 to line 64, col 55 of module LeaderElection: 1
-@!@!@ENDMSG 2221 @!@!@
-@!@!@STARTMSG 2202:0 @!@!@
-End of statistics.
-@!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(1) at 2019-12-12 21:33:46: 2 states generated (119 s/min), 1 distinct states found (59 ds/min), 0 states left on queue.
+Progress(76) at 2019-12-13 10:20:27: 216 812 states generated (216 812 s/min), 75 176 distinct states found (75 176 ds/min), 2 913 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
-@!@!@STARTMSG 2199:0 @!@!@
-2 states generated, 1 distinct states found, 0 states left on queue.
-@!@!@ENDMSG 2199 @!@!@
-@!@!@STARTMSG 2194:0 @!@!@
-The depth of the complete state graph search is 1.
-@!@!@ENDMSG 2194 @!@!@
-@!@!@STARTMSG 2268:0 @!@!@
-The average outdegree of the complete state graph is 0 (minimum is 0, the maximum 0 and the 95th percentile is 0).
-@!@!@ENDMSG 2268 @!@!@
-@!@!@STARTMSG 2186:0 @!@!@
-Finished in 1010ms at (2019-12-12 21:33:46)
-@!@!@ENDMSG 2186 @!@!@

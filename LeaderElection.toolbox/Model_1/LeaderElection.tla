@@ -26,42 +26,42 @@ processes == 1..MAX_PROCESSES
 (* In other words, neighbour[p] represents the process to the right of        *)
 (* process p, which for obvious reasons, has to be different than p itself.   *)
 (******************************************************************************)
-neighbour == CHOOSE r \in Permutations(processes): \A p \in processes : r[p] # p
+neighbour == CHOOSE r \in Permutations(processes): \A p \in processes: r[p] # p
 
 (******************************************************************************)
-(* Sets of the messages of type M1 and M2.                                    *)
+(* Set of all messages. There are two types of messages, M1 and M2. M1        *)
+(* messages use all the defined fields, type, number, phase and counter.      *)
+(* M2 messages use only the first two fields, type and number.                *)
 (******************************************************************************)
-m1 == Int \X Nat \X Nat
-m2 == Int
+messages == [type: {1, 2}, number: Int, phase: Nat, counter: Nat]
 
 --------------------------------------------------------------------------------
 
 VARIABLES
-    phase, \* The phase 
-    state,
-    max,
-    id,
-    
-    (******************************************************************************)
-    (* In the protocol, processes communicate with one another by sending         *)
-    (* messages. We represent the message passing mechanism between processes     *)
-    (* with the variables m1_queue and m2_queue, for messages of type M1 and M2   *)
-    (* respectively. So, mX_queue[p] represents the sequence of messages of type  *)
-    (* X received by process p.                                                   *)
-    (******************************************************************************)
-    m1_queue,
-    m2_queue
+    phase, \* The phase in which each process currently is.
+    state, \* State of a process, it can be active, waiting or passive.
+    id,    \* The number originally stored by a process.
+    max,   \* The accumulated maximum number stored by a process.
 
-vars == <<phase, state, max, id, m1_queue, m2_queue>>
+    (**************************************************************************)
+    (* In the protocol, processes communicate with one another by sending     *)
+    (* messages. We represent the message passing mechanism between processes *)
+    (* with the variable queue.                                               *)
+    (*                                                                        *)
+    (* So, queue[p] represents the sequence of messages (preserves order)     *)
+    (* that process p has received from its neighbour.                        *)
+    (**************************************************************************)
+    queue
+
+vars == <<phase, state, id, max, queue>>
 
 --------------------------------------------------------------------------------
 
 TypeInvariant == /\ phase \in [processes -> Nat]
                  /\ state \in [processes -> {"active", "waiting", "passive"}]
-                 /\ max \in [processes -> Int]
                  /\ id \in [processes -> Int]
-                 /\ m1_queue \in [processes -> Seq(m1)]
-                 /\ m2_queue \in [processes -> Seq(m2)]
+                 /\ max \in [processes -> Int]
+                 /\ queue \in [processes -> Seq(messages)]
 
 --------------------------------------------------------------------------------
 
@@ -69,10 +69,20 @@ Init == /\ phase = [p \in processes |-> 0]
         /\ state = [p \in processes |-> "active"]
         /\ id = [p \in processes |-> p] \* TODO pick a random int instead of p
         /\ max = id
-        /\ m1_queue = [p \in processes |-> << >>]
-        /\ m2_queue = [p \in processes |-> << >>]
-                    
-Next == UNCHANGED vars
+        /\ queue = [p \in processes |-> << >>]
+        
+Start(p) ==
+    /\ state[p] = "active"
+    /\ LET msg == [
+             type    |-> 1,
+             number  |-> max[p],
+             phase   |-> phase[p],
+             counter |-> 2^(phase[p])
+           ]
+       IN queue' = [queue EXCEPT ![neighbour[p]] = Append(@, msg)]
+    /\ UNCHANGED <<phase, state, id, max>>
+
+Next == \E p \in processes: Start(p)
 
 --------------------------------------------------------------------------------
 
