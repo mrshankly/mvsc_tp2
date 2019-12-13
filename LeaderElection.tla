@@ -7,7 +7,7 @@
 (*     Vicente Almeida - 47803                                                *)
 (******************************************************************************)
 
-EXTENDS Integers, Naturals, Sequences, TLC
+EXTENDS FiniteSets, Integers, Naturals, Sequences, TLC
 
 CONSTANT MAX_PROCESSES
 
@@ -69,7 +69,7 @@ TypeInvariant ==
 Init ==
     /\ phase = [p \in processes |-> 0]
     /\ state = [p \in processes |-> "active"]
-    /\ id = [p \in processes |-> p] \* TODO pick a random int instead of p
+    /\ id = [p \in processes |-> p] \* TODO Should be process id, right?
     /\ max = id
     /\ queue = [p \in processes |-> << >>]
 
@@ -171,6 +171,27 @@ Next ==
     \/ \E p \in processes: WaitingReceiveM2(p)
     \/ \E p \in processes: PassiveReceiveM1(p)
     \/ \E p \in processes: PassiveReceiveM2(p)
+
+--------------------------------------------------------------------------------
+
+(******************************************************************************)
+(* The algorithm should finish within a finite time once the leader is        *)
+(* selected.                                                                  *)
+(******************************************************************************)
+Termination == TRUE
+
+(******************************************************************************)
+(* There is exactly one process that considers itself as leader.              *)
+(******************************************************************************)
+Uniqueness ==
+    []<>(\E l \in processes: /\ max[l] = id[l]
+                             /\ \A p \in processes \ {l}: max[p] # id[p])
+
+(******************************************************************************)
+(* All processes know who the leader is.                                      *)
+(******************************************************************************)
+Agreement ==
+    \A p1, p2 \in processes: []<>(max[p1] = max[p2])
 
 --------------------------------------------------------------------------------
 

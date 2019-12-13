@@ -6,7 +6,7 @@
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
     <intAttribute key="fpIndex" value="35"/>
-    <intAttribute key="maxHeapSize" value="80"/>
+    <intAttribute key="maxHeapSize" value="40"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value="Spec"/>
@@ -22,8 +22,8 @@
     <listAttribute key="modelParameterConstants">
         <listEntry value="MAX_PROCESSES;;3;0;0"/>
     </listAttribute>
-    <intAttribute key="numberOfWorkers" value="3"/>
+    <intAttribute key="numberOfWorkers" value="2"/>
     <stringAttribute key="result.mail.address" value=""/>
     <stringAttribute key="specName" value="LeaderElection"/>
-    <stringAttribute key="tlcResourcesProfile" value="local most"/>
+    <stringAttribute key="tlcResourcesProfile" value="local nomal"/>
 </launchConfiguration>
