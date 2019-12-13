@@ -2,7 +2,7 @@
 TLC2 Version 2.14 of 10 July 2019
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 81 and seed -2257619925112277641 with 1 worker on 4 cores with 1179MB heap and 2650MB offheap memory [pid: 6744] (Linux 5.0.0-37-generic amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 35 and seed -3038141511156039580 with 3 workers on 4 cores with 3771MB heap and 8481MB offheap memory [pid: 13155] (Linux 5.0.0-37-generic amd64, AdoptOpenJDK 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -25,14 +25,470 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2019-12-13 10:20:23)
+Starting... (2019-12-13 15:41:16)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2189:0 @!@!@
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2019-12-13 10:20:24.
+Finished computing initial states: 1 distinct state generated at 2019-12-13 15:41:18.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(76) at 2019-12-13 10:20:27: 216 812 states generated (216 812 s/min), 75 176 distinct states found (75 176 ds/min), 2 913 states left on queue.
+Progress(24) at 2019-12-13 15:41:21: 408 969 states generated (408 969 s/min), 153 540 distinct states found (153 540 ds/min), 35 626 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(41) at 2019-12-13 15:42:21: 11 760 469 states generated (11 351 500 s/min), 4 263 292 distinct states found (4 109 752 ds/min), 650 897 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(45) at 2019-12-13 15:43:21: 22 884 839 states generated (11 124 370 s/min), 8 248 509 distinct states found (3 985 217 ds/min), 1 159 854 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(48) at 2019-12-13 15:44:21: 34 142 510 states generated (11 257 671 s/min), 12 275 330 distinct states found (4 026 821 ds/min), 1 634 023 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2201:0 @!@!@
+The coverage statistics at 2019-12-13 15:44:21
+@!@!@ENDMSG 2201 @!@!@
+@!@!@STARTMSG 2773:0 @!@!@
+<Init line 69, col 1 to line 69, col 4 of module LeaderElection>: 1:1
+@!@!@ENDMSG 2773 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 70, col 5 to line 74, col 42 of module LeaderElection: 1
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<ActiveSendM1 line 76, col 1 to line 76, col 15 of module LeaderElection>: 325317:5135627
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 77, col 8 to line 77, col 26 of module LeaderElection: 37062773
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 77, col 8 to line 77, col 15 of module LeaderElection: 31927116
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 77, col 8 to line 77, col 12 of module LeaderElection: 31927122
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 77, col 14 to line 77, col 14 of module LeaderElection: 31927128
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 84, col 11 to line 84, col 66 of module LeaderElection: 5135673
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 84, col 20 to line 84, col 66 of module LeaderElection: 5135673
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 84, col 21 to line 84, col 25 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 84, col 36 to line 84, col 47 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 84, col 36 to line 84, col 44 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 84, col 46 to line 84, col 46 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 84, col 52 to line 84, col 65 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 84, col 62 to line 84, col 64 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 78, col 19 to line 83, col 12 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 80, col 16 to line 80, col 33 of module LeaderElection: 5135663
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 81, col 28 to line 81, col 35 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 81, col 28 to line 81, col 32 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 81, col 34 to line 81, col 34 of module LeaderElection: 5135674
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 82, col 16 to line 82, col 39 of module LeaderElection: 5135664
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 85, col 8 to line 85, col 42 of module LeaderElection: 5135671
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<ActiveReceiveM1 line 87, col 1 to line 87, col 18 of module LeaderElection>: 291799:4523301
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 88, col 8 to line 88, col 26 of module LeaderElection: 36450599
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 88, col 8 to line 88, col 15 of module LeaderElection: 31927296
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 8 to line 89, col 24 of module LeaderElection: 4523307
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 89, col 8 to line 89, col 20 of module LeaderElection: 5135680
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 89, col 29 to line 89, col 51 of module LeaderElection: 9182951
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 89, col 29 to line 89, col 47 of module LeaderElection: 4659643
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 91, col 14 to line 91, col 31 of module LeaderElection: 4523308
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 91, col 14 to line 91, col 22 of module LeaderElection: 4523309
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 91, col 14 to line 91, col 15 of module LeaderElection: 4523310
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 90, col 18 to line 90, col 31 of module LeaderElection: 4523310
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 90, col 23 to line 90, col 30 of module LeaderElection: 4523310
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 90, col 23 to line 90, col 27 of module LeaderElection: 4523310
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 90, col 29 to line 90, col 29 of module LeaderElection: 4523311
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 91, col 26 to line 91, col 31 of module LeaderElection: 4523311
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 92, col 18 to line 92, col 53 of module LeaderElection: 793355
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 93, col 18 to line 93, col 57 of module LeaderElection: 793355
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 94, col 18 to line 94, col 55 of module LeaderElection: 793355
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 95, col 18 to line 95, col 40 of module LeaderElection: 793355
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 97, col 18 to line 97, col 57 of module LeaderElection: 3729959
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 99, col 21 to line 99, col 92 of module LeaderElection: 3729962
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 100, col 18 to line 100, col 45 of module LeaderElection: 3729951
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<WaitingReceiveM1 line 102, col 1 to line 102, col 19 of module LeaderElection>: 535449:2125151
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 103, col 8 to line 103, col 27 of module LeaderElection: 34052512
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 103, col 8 to line 103, col 15 of module LeaderElection: 31927365
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 104, col 8 to line 104, col 24 of module LeaderElection: 2125155
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 104, col 8 to line 104, col 20 of module LeaderElection: 2452841
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 105, col 8 to line 105, col 30 of module LeaderElection: 4484839
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 105, col 8 to line 105, col 26 of module LeaderElection: 2359684
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 105, col 8 to line 105, col 21 of module LeaderElection: 2359685
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 105, col 13 to line 105, col 20 of module LeaderElection: 2359686
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 105, col 13 to line 105, col 17 of module LeaderElection: 2359686
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 105, col 19 to line 105, col 19 of module LeaderElection: 2359686
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 106, col 8 to line 106, col 47 of module LeaderElection: 2125160
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 107, col 8 to line 107, col 42 of module LeaderElection: 2125152
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<WaitingReceiveM2 line 109, col 1 to line 109, col 19 of module LeaderElection>: 32928:234527
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 110, col 8 to line 110, col 27 of module LeaderElection: 32161970
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 110, col 8 to line 110, col 15 of module LeaderElection: 31927449
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 111, col 8 to line 111, col 24 of module LeaderElection: 234527
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 111, col 8 to line 111, col 20 of module LeaderElection: 2452857
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 113, col 14 to line 113, col 24 of module LeaderElection: 2594228
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 113, col 14 to line 113, col 20 of module LeaderElection: 2359700
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 113, col 14 to line 113, col 15 of module LeaderElection: 2359702
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 112, col 18 to line 112, col 31 of module LeaderElection: 2359703
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 112, col 23 to line 112, col 30 of module LeaderElection: 2359703
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 114, col 14 to line 114, col 31 of module LeaderElection: 469056
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 114, col 14 to line 114, col 22 of module LeaderElection: 234528
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 114, col 26 to line 114, col 31 of module LeaderElection: 234528
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 115, col 14 to line 115, col 49 of module LeaderElection: 234528
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 116, col 14 to line 116, col 52 of module LeaderElection: 234528
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 117, col 14 to line 117, col 51 of module LeaderElection: 234528
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 118, col 8 to line 118, col 28 of module LeaderElection: 234527
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<PassiveReceiveM1 line 120, col 1 to line 120, col 19 of module LeaderElection>: 10371003:21185902
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 121, col 8 to line 121, col 27 of module LeaderElection: 53118407
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 121, col 8 to line 121, col 15 of module LeaderElection: 31930578
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 122, col 8 to line 122, col 24 of module LeaderElection: 21188213
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 122, col 8 to line 122, col 20 of module LeaderElection: 24341356
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 122, col 12 to line 122, col 19 of module LeaderElection: 24341362
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 122, col 12 to line 122, col 16 of module LeaderElection: 24341368
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 122, col 18 to line 122, col 18 of module LeaderElection: 24341373
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 122, col 29 to line 122, col 51 of module LeaderElection: 43318593
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 122, col 29 to line 122, col 47 of module LeaderElection: 22130343
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 122, col 29 to line 122, col 42 of module LeaderElection: 22130481
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 124, col 14 to line 124, col 51 of module LeaderElection: 21188401
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 124, col 14 to line 124, col 32 of module LeaderElection: 21188405
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 124, col 14 to line 124, col 22 of module LeaderElection: 21188405
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 124, col 14 to line 124, col 15 of module LeaderElection: 21188408
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 123, col 18 to line 123, col 31 of module LeaderElection: 21188411
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 123, col 23 to line 123, col 30 of module LeaderElection: 21188413
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 123, col 23 to line 123, col 27 of module LeaderElection: 21188415
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||||line 123, col 29 to line 123, col 29 of module LeaderElection: 21188416
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 124, col 27 to line 124, col 32 of module LeaderElection: 21188419
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 124, col 37 to line 124, col 51 of module LeaderElection: 5124517
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 125, col 18 to line 125, col 53 of module LeaderElection: 3391500
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 125, col 25 to line 125, col 53 of module LeaderElection: 3391500
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 125, col 26 to line 125, col 28 of module LeaderElection: 3391501
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 125, col 37 to line 125, col 52 of module LeaderElection: 3391260
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 125, col 44 to line 125, col 52 of module LeaderElection: 3391504
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 125, col 44 to line 125, col 45 of module LeaderElection: 3391505
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 126, col 21 to line 126, col 34 of module LeaderElection: 3391505
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 133, col 28 to line 133, col 99 of module LeaderElection: 1528745
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 134, col 25 to line 134, col 54 of module LeaderElection: 1528745
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 136, col 25 to line 136, col 64 of module LeaderElection: 1862763
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 136, col 34 to line 136, col 64 of module LeaderElection: 1862763
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 136, col 35 to line 136, col 39 of module LeaderElection: 1862765
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 136, col 48 to line 136, col 63 of module LeaderElection: 1862518
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 143, col 28 to line 143, col 99 of module LeaderElection: 1862766
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 144, col 25 to line 144, col 63 of module LeaderElection: 1862767
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 145, col 25 to line 145, col 40 of module LeaderElection: 1862520
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 153, col 21 to line 153, col 92 of module LeaderElection: 17796989
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 153, col 30 to line 153, col 92 of module LeaderElection: 17796994
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 153, col 31 to line 153, col 35 of module LeaderElection: 17796998
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 153, col 44 to line 153, col 57 of module LeaderElection: 17794670
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 153, col 62 to line 153, col 73 of module LeaderElection: 17797004
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 153, col 62 to line 153, col 70 of module LeaderElection: 17797008
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 153, col 72 to line 153, col 72 of module LeaderElection: 17797010
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 153, col 78 to line 153, col 91 of module LeaderElection: 17797014
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||line 153, col 88 to line 153, col 90 of module LeaderElection: 17797018
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||||line 147, col 29 to line 152, col 22 of module LeaderElection: 17797022
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 149, col 26 to line 149, col 46 of module LeaderElection: 17794672
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |||||line 150, col 26 to line 150, col 45 of module LeaderElection: 17794672
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 154, col 18 to line 154, col 52 of module LeaderElection: 17796394
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2772:0 @!@!@
+<PassiveReceiveM2 line 156, col 1 to line 156, col 19 of module LeaderElection>: 720327:942087
+@!@!@ENDMSG 2772 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 157, col 8 to line 157, col 27 of module LeaderElection: 32873571
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 157, col 8 to line 157, col 15 of module LeaderElection: 31931487
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 158, col 8 to line 158, col 24 of module LeaderElection: 942087
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 158, col 8 to line 158, col 20 of module LeaderElection: 24341717
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 158, col 29 to line 158, col 51 of module LeaderElection: 23072758
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 158, col 29 to line 158, col 47 of module LeaderElection: 22130672
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 160, col 14 to line 160, col 32 of module LeaderElection: 942087
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 161, col 16 to line 161, col 86 of module LeaderElection: 186416
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 162, col 16 to line 162, col 50 of module LeaderElection: 186416
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 164, col 16 to line 164, col 53 of module LeaderElection: 755671
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 165, col 16 to line 165, col 50 of module LeaderElection: 755671
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2774:0 @!@!@
+<TypeInvariant line 60, col 1 to line 60, col 13 of module LeaderElection>
+@!@!@ENDMSG 2774 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 61, col 5 to line 65, col 45 of module LeaderElection: 12278434
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 61, col 8 to line 61, col 35 of module LeaderElection: 12278437
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 62, col 8 to line 62, col 64 of module LeaderElection: 12278439
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 63, col 8 to line 63, col 32 of module LeaderElection: 12278443
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 64, col 8 to line 64, col 33 of module LeaderElection: 12278444
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  |line 65, col 8 to line 65, col 45 of module LeaderElection: 12278447
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 65, col 8 to line 65, col 12 of module LeaderElection: 12278450
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  ||line 65, col 18 to line 65, col 45 of module LeaderElection: 12278452
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2202:0 @!@!@
+End of statistics.
+@!@!@ENDMSG 2202 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(49) at 2019-12-13 15:45:21: 44 579 540 states generated (10 437 030 s/min), 15 997 286 distinct states found (3 721 956 ds/min), 2 046 962 states left on queue.
+@!@!@ENDMSG 2200 @!@!@
+@!@!@STARTMSG 2200:0 @!@!@
+Progress(51) at 2019-12-13 15:46:21: 54 912 516 states generated (10 332 976 s/min), 19 666 906 distinct states found (3 669 620 ds/min), 2 463 477 states left on queue.
 @!@!@ENDMSG 2200 @!@!@

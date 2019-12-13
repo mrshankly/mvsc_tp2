@@ -2,10 +2,10 @@
 EXTENDS LeaderElection, TLC
 
 \* CONSTANT definitions @modelParameterConstants:0MAX_PROCESSES
-const_15762324228012000 == 
+const_157625167623225000 == 
 3
 ----
 
 ================================================================================
 \* Modification History
-\* Created Fri Dec 13 10:20:22 WET 2019 by jm
+\* Created Fri Dec 13 15:41:16 WET 2019 by jm

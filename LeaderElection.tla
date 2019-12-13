@@ -72,7 +72,7 @@ Init ==
     /\ id = [p \in processes |-> p] \* TODO pick a random int instead of p
     /\ max = id
     /\ queue = [p \in processes |-> << >>]
-        
+
 ActiveSendM1(p) ==
     /\ state[p] = "active"
     /\ LET msg == [
@@ -92,22 +92,95 @@ ActiveReceiveM1(p) ==
               /\ max' = [max EXCEPT ![p] = m1.number]
               /\ state' = [state EXCEPT ![p] = "waiting"]
               /\ queue' = [queue EXCEPT ![p] = Tail(@)]
-              /\ UNCHANGED <<phase, id, queue>>
+              /\ UNCHANGED <<phase, id>>
           ELSE
               /\ state' = [state EXCEPT ![p] = "passive"]
-              /\ LET m2 == [type |-> 2, number |-> max[p]]
-                 IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, m2)]
+              /\ LET msg == [type |-> 2, number |-> max[p], phase |-> 0, counter |-> 0]
+                 IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
               /\ UNCHANGED <<phase, id, max>>
+
+WaitingReceiveM1(p) ==
+    /\ state[p] = "waiting"
+    /\ Len(queue[p]) > 0
+    /\ Head(queue[p]).type = 1
+    /\ state' = [state EXCEPT ![p] = "passive"]
+    /\ UNCHANGED <<phase, id, max, queue>>
+
+WaitingReceiveM2(p) ==
+    /\ state[p] = "waiting"
+    /\ Len(queue[p]) > 0
+    /\ LET m2 == Head(queue[p])
+       IN /\ m2.type = 2
+          /\ m2.number = max[p]
+          /\ phase' = [phase EXCEPT ![p] = @ + 1]
+          /\ state' = [state EXCEPT ![p] = "active"]
+          /\ queue' = [queue EXCEPT ![p] = Tail(@)]
+    /\ UNCHANGED <<id, max>>
+
+PassiveReceiveM1(p) ==
+    /\ state[p] = "passive"
+    /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
+    /\ LET m1 == Head(queue[p])
+       IN IF m1.number >= max[p] /\ m1.counter >= 1 THEN
+              /\ max' = [max EXCEPT ![p] = m1.number]
+              /\ IF m1.counter > 1 THEN
+                     /\ LET msg == [
+                                type    |-> 1,
+                                number  |-> m1.number,
+                                phase   |-> m1.phase,
+                                counter |-> m1.counter - 1
+                            ]
+                        IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
+                     /\ UNCHANGED <<phase, id, state>>
+                 ELSE
+                     /\ state' = [state EXCEPT ![p] = "waiting"]
+                     /\ LET msg == [
+                                type    |-> 1,
+                                number  |-> m1.number,
+                                phase   |-> m1.phase,
+                                counter |-> 0
+                            ]
+                        IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
+                     /\ phase' = [phase EXCEPT ![p] = m1.phase]
+                     /\ UNCHANGED <<id>>
+          ELSE
+              /\ LET msg == [
+                         type    |-> 1,
+                         number  |-> m1.number,
+                         phase   |-> m1.phase,
+                         counter |-> 0
+                     ]
+                 IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
+              /\ UNCHANGED <<phase, id, max, state>>
+
+PassiveReceiveM2(p) ==
+    /\ state[p] = "passive"
+    /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 2
+    /\ LET m2 == Head(queue[p])
+       IN IF m2.number >= max[p] THEN
+            /\ queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, m2)]
+            /\ UNCHANGED <<phase, id, max, state>>
+          ELSE
+            /\ queue' = [queue EXCEPT ![p] = Tail(@)]
+            /\ UNCHANGED <<phase, state, id, max>>
 
 Next ==
     \/ \E p \in processes: ActiveSendM1(p)
     \/ \E p \in processes: ActiveReceiveM1(p)
+    \/ \E p \in processes: WaitingReceiveM1(p)
+    \/ \E p \in processes: WaitingReceiveM2(p)
+    \/ \E p \in processes: PassiveReceiveM1(p)
+    \/ \E p \in processes: PassiveReceiveM2(p)
 
 --------------------------------------------------------------------------------
 
 Fairness ==
     /\ \A p \in processes: WF_vars(ActiveSendM1(p))
     /\ \A p \in processes: SF_vars(ActiveReceiveM1(p))
+    /\ \A p \in processes: SF_vars(WaitingReceiveM1(p))
+    /\ \A p \in processes: SF_vars(WaitingReceiveM2(p))
+    /\ \A p \in processes: SF_vars(PassiveReceiveM1(p))
+    /\ \A p \in processes: SF_vars(PassiveReceiveM2(p))
 
 Spec ==
     /\ Init

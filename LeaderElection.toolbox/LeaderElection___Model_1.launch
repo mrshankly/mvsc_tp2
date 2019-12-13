@@ -5,13 +5,13 @@
     <stringAttribute key="distributedNetworkInterface" value="172.17.0.1"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="81"/>
-    <intAttribute key="maxHeapSize" value="25"/>
+    <intAttribute key="fpIndex" value="35"/>
+    <intAttribute key="maxHeapSize" value="80"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value="Spec"/>
     <intAttribute key="modelBehaviorSpecType" value="1"/>
-    <stringAttribute key="modelBehaviorVars" value=""/>
+    <stringAttribute key="modelBehaviorVars" value="state, id, phase, max, queue"/>
     <stringAttribute key="modelComments" value=""/>
     <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
     <listAttribute key="modelCorrectnessInvariants">
@@ -22,8 +22,8 @@
     <listAttribute key="modelParameterConstants">
         <listEntry value="MAX_PROCESSES;;3;0;0"/>
     </listAttribute>
-    <intAttribute key="numberOfWorkers" value="1"/>
+    <intAttribute key="numberOfWorkers" value="3"/>
     <stringAttribute key="result.mail.address" value=""/>
     <stringAttribute key="specName" value="LeaderElection"/>
-    <stringAttribute key="tlcResourcesProfile" value="local custom"/>
+    <stringAttribute key="tlcResourcesProfile" value="local most"/>
 </launchConfiguration>
