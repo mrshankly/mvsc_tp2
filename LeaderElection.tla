@@ -3,13 +3,13 @@
 (* Trabalho Prático 2 - MVSC 2019                                             *)
 (*                                                                            *)
 (* Realizado por:                                                             *)
-(*     João Marques - 48500                                                   *)
+(*     João Marques - 48500,                                                  *)
 (*     Vicente Almeida - 47803                                                *)
 (******************************************************************************)
 
-EXTENDS FiniteSets, Integers, Naturals, Sequences, TLC
+EXTENDS FiniteSets, Integers, Naturals, Sequences
 
-CONSTANT MAX_PROCESSES
+CONSTANT MAX_PROCESSES, ID
 
 (******************************************************************************)
 (* Set of processes, where each process is identified by an integer ranging   *)
@@ -26,22 +26,23 @@ processes == 1..MAX_PROCESSES
 (* In other words, neighbour[p] represents the process to the right of        *)
 (* process p, which for obvious reasons, has to be different than p itself.   *)
 (******************************************************************************)
-neighbour == CHOOSE r \in Permutations(processes): \A p \in processes: r[p] # p
+neighbour(p) == 1 + (p % MAX_PROCESSES)
 
 (******************************************************************************)
-(* Set of all messages. There are two types of messages, M1 and M2. M1        *)
-(* messages use all the defined fields, type, number, phase and counter.      *)
-(* M2 messages use only the first two fields, type and number.                *)
+(* Sets of all messages of type 1 and type 2.                                 *)
 (******************************************************************************)
-messages == [type: {1, 2}, number: Int, phase: Nat, counter: Nat]
+message1 == [type: {1}, number: Int, phase: Nat, counter: Nat]
+message2 == [type: {2}, number: Int]
 
 --------------------------------------------------------------------------------
 
 VARIABLES
-    phase, \* The phase in which each process currently is.
-    state, \* State of a process, it can be active, waiting or passive.
-    id,    \* The number originally stored by a process.
-    max,   \* The accumulated maximum number stored by a process.
+    phase,      \* The phase in which each process currently is.
+    started,    \* Indicates whether an active process has sent the initial M1
+                \* message to its neighbour.
+    state,      \* State of a process, it can be active, waiting or passive.
+    id,         \* The number originally stored by a process.
+    max,        \* The accumulated maximum number stored by a process.
 
     (**************************************************************************)
     (* In the protocol, processes communicate with one another by sending     *)
@@ -53,69 +54,72 @@ VARIABLES
     (**************************************************************************)
     queue
 
-vars == <<phase, state, id, max, queue>>
+vars == <<phase, started, state, id, max, queue>>
 
 --------------------------------------------------------------------------------
 
 TypeInvariant ==
     /\ phase \in [processes -> Nat]
+    /\ started \in [processes -> BOOLEAN]
     /\ state \in [processes -> {"active", "waiting", "passive"}]
     /\ id \in [processes -> Int]
     /\ max \in [processes -> Int]
-    /\ queue \in [processes -> Seq(messages)]
+    /\ queue \in [processes -> Seq(message1 \union message2)]
 
 --------------------------------------------------------------------------------
 
 Init ==
     /\ phase = [p \in processes |-> 0]
+    /\ started = [p \in processes |-> FALSE]
     /\ state = [p \in processes |-> "active"]
-    /\ id = [p \in processes |-> p] \* TODO Should be process id, right?
+    /\ id = [p \in processes |-> ID[p]]
     /\ max = id
-    /\ queue = [p \in processes |-> << >>]
+    /\ queue = [p \in processes |-> <<>>]
 
 ActiveSendM1(p) ==
-    /\ state[p] = "active"
+    /\ state[p] = "active" /\ started[p] = FALSE
+    /\ started' = [started EXCEPT ![p] = TRUE]
     /\ LET msg == [
                type    |-> 1,
                number  |-> max[p],
                phase   |-> phase[p],
                counter |-> 2^(phase[p])
            ]
-       IN queue' = [queue EXCEPT ![neighbour[p]] = Append(@, msg)]
+       IN queue' = [queue EXCEPT ![neighbour(p)] = Append(@, msg)]
     /\ UNCHANGED <<phase, state, id, max>>
 
 ActiveReceiveM1(p) ==
-    /\ state[p] = "active"
+    /\ state[p] = "active" /\ started[p] = TRUE
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
     /\ LET m1 == Head(queue[p])
        IN IF m1.number > max[p] THEN
               /\ max' = [max EXCEPT ![p] = m1.number]
               /\ state' = [state EXCEPT ![p] = "waiting"]
               /\ queue' = [queue EXCEPT ![p] = Tail(@)]
-              /\ UNCHANGED <<phase, id>>
+              /\ UNCHANGED <<phase, started, id>>
           ELSE
               /\ state' = [state EXCEPT ![p] = "passive"]
-              /\ LET msg == [type |-> 2, number |-> max[p], phase |-> 0, counter |-> 0]
-                 IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
-              /\ UNCHANGED <<phase, id, max>>
+              /\ LET msg == [type |-> 2, number |-> max[p]]
+                 IN queue' = [queue EXCEPT ![p] = Tail(@),
+                                           ![neighbour(p)] = Append(@, msg)]
+              /\ UNCHANGED <<phase, started, id, max>>
 
 WaitingReceiveM1(p) ==
     /\ state[p] = "waiting"
-    /\ Len(queue[p]) > 0
-    /\ Head(queue[p]).type = 1
+    /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
     /\ state' = [state EXCEPT ![p] = "passive"]
-    /\ UNCHANGED <<phase, id, max, queue>>
+    /\ UNCHANGED <<phase, started, id, max, queue>>
 
 WaitingReceiveM2(p) ==
     /\ state[p] = "waiting"
-    /\ Len(queue[p]) > 0
+    /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 2
     /\ LET m2 == Head(queue[p])
-       IN /\ m2.type = 2
-          /\ m2.number = max[p]
+       IN /\ m2.number = max[p]
           /\ phase' = [phase EXCEPT ![p] = @ + 1]
           /\ state' = [state EXCEPT ![p] = "active"]
+          /\ started' = [started EXCEPT ![p] = FALSE]
           /\ queue' = [queue EXCEPT ![p] = Tail(@)]
-    /\ UNCHANGED <<id, max>>
+          /\ UNCHANGED <<id, max>>
 
 PassiveReceiveM1(p) ==
     /\ state[p] = "passive"
@@ -124,53 +128,42 @@ PassiveReceiveM1(p) ==
        IN IF m1.number >= max[p] /\ m1.counter >= 1 THEN
               /\ max' = [max EXCEPT ![p] = m1.number]
               /\ IF m1.counter > 1 THEN
-                     /\ LET msg == [
-                                type    |-> 1,
-                                number  |-> m1.number,
-                                phase   |-> m1.phase,
-                                counter |-> m1.counter - 1
-                            ]
-                        IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
-                     /\ UNCHANGED <<phase, id, state>>
+                     /\ LET msg == [m1 EXCEPT !.counter = @ - 1]
+                        IN queue' = [queue EXCEPT ![p] = Tail(@),
+                                                  ![neighbour(p)] = Append(@, msg)]
+                     /\ UNCHANGED <<phase, started, state, id>>
                  ELSE
                      /\ state' = [state EXCEPT ![p] = "waiting"]
-                     /\ LET msg == [
-                                type    |-> 1,
-                                number  |-> m1.number,
-                                phase   |-> m1.phase,
-                                counter |-> 0
-                            ]
-                        IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
                      /\ phase' = [phase EXCEPT ![p] = m1.phase]
-                     /\ UNCHANGED <<id>>
+                     /\ LET msg == [m1 EXCEPT !.counter = 0]
+                        IN queue' = [queue EXCEPT ![p] = Tail(@),
+                                                  ![neighbour(p)] = Append(@, msg)]
+                     /\ UNCHANGED <<started, id>>
           ELSE
-              /\ LET msg == [
-                         type    |-> 1,
-                         number  |-> m1.number,
-                         phase   |-> m1.phase,
-                         counter |-> 0
-                     ]
-                 IN queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, msg)]
-              /\ UNCHANGED <<phase, id, max, state>>
+              /\ LET msg == [m1 EXCEPT !.counter = 0]
+                 IN queue' = [queue EXCEPT ![p] = Tail(@),
+                                           ![neighbour(p)] = Append(@, msg)]
+              /\ UNCHANGED <<phase, started, id, max, state>>
 
 PassiveReceiveM2(p) ==
     /\ state[p] = "passive"
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 2
     /\ LET m2 == Head(queue[p])
-       IN IF m2.number >= max[p] THEN
-            /\ queue' = [queue EXCEPT ![p] = Tail(@), ![neighbour[p]] = Append(@, m2)]
-            /\ UNCHANGED <<phase, id, max, state>>
+       IN IF m2.number < max[p] THEN
+              /\ queue' = [queue EXCEPT ![p] = Tail(@)]
+              /\ UNCHANGED <<phase, started, state, id, max>>
           ELSE
-            /\ queue' = [queue EXCEPT ![p] = Tail(@)]
-            /\ UNCHANGED <<phase, state, id, max>>
+              /\ queue' = [queue EXCEPT ![p] = Tail(@),
+                                        ![neighbour(p)] = Append(@, m2)]
+              /\ UNCHANGED <<phase, started, state, id, max>>
 
 Next ==
-    \/ \E p \in processes: ActiveSendM1(p)
-    \/ \E p \in processes: ActiveReceiveM1(p)
-    \/ \E p \in processes: WaitingReceiveM1(p)
-    \/ \E p \in processes: WaitingReceiveM2(p)
-    \/ \E p \in processes: PassiveReceiveM1(p)
-    \/ \E p \in processes: PassiveReceiveM2(p)
+    \E p \in processes: \/ ActiveSendM1(p)
+                        \/ ActiveReceiveM1(p)
+                        \/ WaitingReceiveM1(p)
+                        \/ WaitingReceiveM2(p)
+                        \/ PassiveReceiveM1(p)
+                        \/ PassiveReceiveM2(p)
 
 --------------------------------------------------------------------------------
 
@@ -178,30 +171,30 @@ Next ==
 (* The algorithm should finish within a finite time once the leader is        *)
 (* selected.                                                                  *)
 (******************************************************************************)
-Termination == TRUE
+Termination == [](TRUE)
 
 (******************************************************************************)
 (* There is exactly one process that considers itself as leader.              *)
 (******************************************************************************)
 Uniqueness ==
-    []<>(\E l \in processes: /\ max[l] = id[l]
+    <>[](\E l \in processes: /\ max[l] = id[l]
                              /\ \A p \in processes \ {l}: max[p] # id[p])
 
 (******************************************************************************)
 (* All processes know who the leader is.                                      *)
 (******************************************************************************)
 Agreement ==
-    \A p1, p2 \in processes: []<>(max[p1] = max[p2])
+    \A p1, p2 \in processes: <>[](max[p1] = max[p2])
 
 --------------------------------------------------------------------------------
 
 Fairness ==
-    /\ \A p \in processes: WF_vars(ActiveSendM1(p))
-    /\ \A p \in processes: SF_vars(ActiveReceiveM1(p))
-    /\ \A p \in processes: SF_vars(WaitingReceiveM1(p))
-    /\ \A p \in processes: SF_vars(WaitingReceiveM2(p))
-    /\ \A p \in processes: SF_vars(PassiveReceiveM1(p))
-    /\ \A p \in processes: SF_vars(PassiveReceiveM2(p))
+    \A p \in processes: /\ WF_vars(ActiveSendM1(p))
+                        /\ SF_vars(ActiveReceiveM1(p))
+                        /\ SF_vars(WaitingReceiveM1(p))
+                        /\ SF_vars(WaitingReceiveM2(p))
+                        /\ SF_vars(PassiveReceiveM1(p))
+                        /\ SF_vars(PassiveReceiveM2(p))
 
 Spec ==
     /\ Init

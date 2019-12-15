@@ -5,25 +5,30 @@
     <stringAttribute key="distributedNetworkInterface" value="172.17.0.1"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="35"/>
-    <intAttribute key="maxHeapSize" value="40"/>
+    <intAttribute key="fpIndex" value="114"/>
+    <intAttribute key="maxHeapSize" value="80"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
     <stringAttribute key="modelBehaviorSpec" value="Spec"/>
     <intAttribute key="modelBehaviorSpecType" value="1"/>
-    <stringAttribute key="modelBehaviorVars" value="state, id, phase, max, queue"/>
+    <stringAttribute key="modelBehaviorVars" value="state, started, id, phase, max, queue"/>
     <stringAttribute key="modelComments" value=""/>
     <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
     <listAttribute key="modelCorrectnessInvariants">
         <listEntry value="1TypeInvariant"/>
     </listAttribute>
-    <listAttribute key="modelCorrectnessProperties"/>
+    <listAttribute key="modelCorrectnessProperties">
+        <listEntry value="1Agreement"/>
+        <listEntry value="1Uniqueness"/>
+    </listAttribute>
+    <intAttribute key="modelEditorOpenTabs" value="0"/>
     <stringAttribute key="modelExpressionEval" value=""/>
     <listAttribute key="modelParameterConstants">
         <listEntry value="MAX_PROCESSES;;3;0;0"/>
+        <listEntry value="ID;;&lt;&lt;3,-3, 8&gt;&gt;;0;0"/>
     </listAttribute>
-    <intAttribute key="numberOfWorkers" value="2"/>
+    <intAttribute key="numberOfWorkers" value="3"/>
     <stringAttribute key="result.mail.address" value=""/>
     <stringAttribute key="specName" value="LeaderElection"/>
-    <stringAttribute key="tlcResourcesProfile" value="local nomal"/>
+    <stringAttribute key="tlcResourcesProfile" value="local custom"/>
 </launchConfiguration>
