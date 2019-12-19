@@ -85,6 +85,11 @@ Init ==
     /\ queue = [p \in processes |-> <<>>]
     /\ terminated = FALSE
 
+(***************************************************************************)
+(* The process "p" sends an M1 type message to it's neighbour.             *)
+(* - Only active processes can perform this action.                        *)
+(* - Only one M1 message should be sent by the process, per phase.         *)
+(***************************************************************************)
 ActiveSendM1(p) ==
     /\ state[p] = "active" /\ started[p] = FALSE
     /\ started' = [started EXCEPT ![p] = TRUE]
@@ -97,6 +102,18 @@ ActiveSendM1(p) ==
        IN queue' = [queue EXCEPT ![neighbour(p)] = Append(@, msg)]
     /\ UNCHANGED <<phase, state, id, max, terminated>>
 
+(***************************************************************************)
+(* The active process "p" receives a M1 type message "m1".                 *)
+(* - If the number "n" contained within m1 is equal to p's id, then all    *)
+(* processes have agreed that p is the leader and the algorithm should     *)
+(* terminate.                                                              *)
+(* - If that n is larger than p's current maximum number then n shall      *)
+(* become p's new maximum number. After receiving this message p is now    *)
+(* waiting for another message.                                            *)
+(* - If n is smaller than p's maximum number then p will send an M2 type   *)
+(* message to it's neighbor, transmiting p's maximum number. After doing   *)
+(* so, p becomes passive.                                                  *)
+(***************************************************************************)
 ActiveReceiveM1(p) ==
     /\ state[p] = "active" /\ started[p] = TRUE
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
@@ -116,12 +133,21 @@ ActiveReceiveM1(p) ==
                                            ![neighbour(p)] = Append(@, msg)]
               /\ UNCHANGED <<phase, started, id, max, terminated>>
 
+
+
+(***************************************************************************)
+(* The waiting process "p" receives an M1 type message, becoming passive.  *)
+(***************************************************************************)
 WaitingReceiveM1(p) ==
     /\ state[p] = "waiting"
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
     /\ state' = [state EXCEPT ![p] = "passive"]
     /\ UNCHANGED <<phase, started, id, max, queue, terminated>>
 
+(***************************************************************************)
+(* The waiting process "p" receives an M2 type message. This signals the   *)
+(* begginging of a new phase for p, so it becomes active once again.       *)
+(***************************************************************************)
 WaitingReceiveM2(p) ==
     /\ state[p] = "waiting"
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 2
@@ -132,6 +158,7 @@ WaitingReceiveM2(p) ==
           /\ started' = [started EXCEPT ![p] = FALSE]
           /\ queue' = [queue EXCEPT ![p] = Tail(@)]
           /\ UNCHANGED <<id, max, terminated>>
+
 
 PassiveReceiveM1(p) ==
     /\ state[p] = "passive"
