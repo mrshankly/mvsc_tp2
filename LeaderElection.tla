@@ -159,7 +159,19 @@ WaitingReceiveM2(p) ==
           /\ queue' = [queue EXCEPT ![p] = Tail(@)]
           /\ UNCHANGED <<id, max, terminated>>
 
-
+(***************************************************************************)
+(* The passive process "p" receives an M1 type message "m".                *)
+(* - If m's number is higher or equal to p's maximum and m's counter is    *)
+(* higher than 1, then p simply forwards m to it's neighbor, decrementing  *)
+(* m's counter                                                             *)
+(* - If m's number is higher or equal to p's maximum and m's counter is    *)
+(* lower or equal to one, then p stops being passive and starts waiting    *)
+(* for a message to become active or passive again. p's phase jumps to the *)
+(* one contained within m and p forwards the m to it's neighbor, with      *)
+(* counter at 0                                                            *)
+(* - If non of the previous conditions are met, p forwards the m to it's   *)
+(* neighbor, with counter at 0                                             *)
+(***************************************************************************)
 PassiveReceiveM1(p) ==
     /\ state[p] = "passive"
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
@@ -184,6 +196,12 @@ PassiveReceiveM1(p) ==
                                            ![neighbour(p)] = Append(@, msg)]
               /\ UNCHANGED <<phase, started, id, max, state, terminated>>
 
+(***************************************************************************)
+(* The passive process "p" receives a M2 type message "m".                 *)
+(* - If m's number is lower than p's maximum, then the message is ignored  *)
+(* - If m's number is higher than p's maximum, then p forwards the message *)
+(* to it's neighbor                                                        *)
+(***************************************************************************)
 PassiveReceiveM2(p) ==
     /\ state[p] = "passive"
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 2
