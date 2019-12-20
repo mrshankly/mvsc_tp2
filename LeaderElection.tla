@@ -284,7 +284,7 @@ Fairness ==
 
 
 (***************************************************************************)
-(* We tested both specifications under the following conditions:           *)
+(* We tested this specifications under the following conditions:           *)
 (*     Behaviour Spec: Temporal formula - Spec                             *)
 (*     Constant Values: MAX_PROCESSES <- 3, ID <- <<-1, 10, 4>>            *)
 (*     Invariants: TypeInvariant                                           *)
@@ -295,6 +295,14 @@ Spec ==
     /\ [][Next]_vars
     /\ Fairness
 
+
+(***************************************************************************)
+(* We tested this specifications under the following conditions:           *)
+(*     Behaviour Spec: Temporal formula - SpecLoseMsg                      *)
+(*     Constant Values: MAX_PROCESSES <- 3, ID <- <<-1, 10, 4>>            *)
+(*     Invariants: TypeInvariant                                           *)
+(*     Properties: Agreement, Uniqueness, Termination                      *)
+(***************************************************************************)
 SpecLoseMsg ==
     /\ Init
     /\ [][NextLoseMsg]_vars
