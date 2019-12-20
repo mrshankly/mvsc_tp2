@@ -1,9 +1,9 @@
 ---------------------------- MODULE LeaderElection -----------------------------
 (******************************************************************************)
-(* Trabalho Prático 2 - MVSC 2019                                             *)
+(* Trabalho Prático 2 - MVSC 2019                                            *)
 (*                                                                            *)
 (* Realizado por:                                                             *)
-(*     João Marques - 48500,                                                  *)
+(*     João Marques - 48500,                                                 *)
 (*     Vicente Almeida - 47803                                                *)
 (******************************************************************************)
 
@@ -282,6 +282,14 @@ Fairness ==
                         /\ SF_vars(PassiveReceiveM1(p))
                         /\ SF_vars(PassiveReceiveM2(p))
 
+
+(***************************************************************************)
+(* We tested both specifications under the following conditions:           *)
+(*     Behaviour Spec: Temporal formula - Spec                             *)
+(*     Constant Values: MAX_PROCESSES <- 3, ID <- <<-1, 10, 4>>            *)
+(*     Invariants: TypeInvariant                                           *)
+(*     Properties: Agreement, Uniqueness, Termination                      *)
+(***************************************************************************)
 Spec ==
     /\ Init
     /\ [][Next]_vars
