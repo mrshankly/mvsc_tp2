@@ -363,27 +363,5 @@ SpecLoseMsg ==
     /\ Init
     /\ [][NextLoseMsg]_vars
     /\ Fairness
-    
-(******************************************************************************)
-(* We tested our implementation with 4 models, Model_1, Model_2, Model_3 and  *)
-(* Model_4. All models with the TypeInvariant invariant and the properties    *)
-(* Termination, Agreement, Uniqueness and CorrectLeader enabled.              *)
-(*                                                                            *)
-(* - Models 1 and 2 do not lose messages, use Spec.                           *)
-(* - Model_1:                                                                 *)
-(*     ID <- <<-7, 7, -8, -10, -2, 42, 24>>                                   *)
-(*     MAX_PROCESSES <- 7                                                     *)
-(* - Model_2:                                                                 *)
-(*     ID <- <<-5, 3, 8, 2>>                                                  *)
-(*     MAX_PROCESSES <- 4                                                     *)
-(*                                                                            *)
-(* - Models 3 and 4 lose messages, use SpecLoseMsg.                           *)
-(* - Model_3:                                                                 *)
-(*     ID <- <<-7, 7, -8, -10, -2, 42, 24>>                                   *)
-(*     MAX_PROCESSES <- 7                                                     *)
-(* - Model_4:                                                                 *)
-(*     ID <- <<-5, 3, 8, 2>>                                                  *)
-(*     MAX_PROCESSES <- 4                                                     *)
-(******************************************************************************)
 
 ================================================================================

@@ -1,9 +1,9 @@
 ---------------------------- MODULE LeaderElection -----------------------------
 (******************************************************************************)
-(* Trabalho Prático 2 - MVSC 2019                                            *)
+(* Trabalho Prático 2 - MVSC 2019                                             *)
 (*                                                                            *)
 (* Realizado por:                                                             *)
-(*     João Marques - 48500,                                                 *)
+(*     João Marques - 48500,                                                  *)
 (*     Vicente Almeida - 47803                                                *)
 (*                                                                            *)
 (* In the following TLA file we specify a solution to the Leader Election     *)
@@ -294,7 +294,8 @@ NextLoseMsg ==
 (******************************************************************************)
 (* The algorithm should finish within a finite time once the leader is        *)
 (* selected. We simply say that eventually it's always going to be true that  *)
-(* the flag terminated is TRUE.                                               *)
+(* the flag terminated is TRUE. Because the algorithm terminates, please      *)
+(* remove the DEADLOCK check when running models.                             *)
 (******************************************************************************)
 Termination == <>[](terminated = TRUE)
 
@@ -316,8 +317,23 @@ Uniqueness ==
 Agreement ==
     \A p1, p2 \in processes: <>[](max[p1] = max[p2])
 
+(******************************************************************************)
+(* The correct leader is chosen. Eventually the id of all processes is always *)
+(* going to be less than or equal to it's max.                                *)
+(******************************************************************************)
+CorrectLeader ==
+    \A p \in processes: <>[](id[p] <= max[p])
 --------------------------------------------------------------------------------
 
+(******************************************************************************)
+(* Receive actions when enabled are enabled forever until the message is      *)
+(* removed from the queue, for this reason weak fairness is used on receive   *)
+(* actions. For the ActiveSendM1 action, we can drop the requirement that the *)
+(* action needs to be infinitily enabled. Our implementation also works if we *)
+(* swap the fairness, WF for ActiveSendM1 and SF for the other actions, but   *)
+(* this requires a lot of resources and we are unable to test with a high     *)
+(* number of processes.                                                       *)
+(******************************************************************************)
 Fairness ==
     \A p \in processes: /\ SF_vars(ActiveSendM1(p))
                         /\ WF_vars(ActiveReceiveM1(p))
@@ -347,5 +363,27 @@ SpecLoseMsg ==
     /\ Init
     /\ [][NextLoseMsg]_vars
     /\ Fairness
+
+(******************************************************************************)
+(* We tested our implementation with 4 models, Model_1, Model_2, Model_3 and  *)
+(* Model_4. All models with the TypeInvariant invariant and the properties    *)
+(* Termination, Agreement, Uniqueness and CorrectLeader enabled.              *)
+(*                                                                            *)
+(* - Models 1 and 2 do not lose messages, use Spec.                           *)
+(* - Model_1:                                                                 *)
+(*     ID <- <<-7, 7, -8, -10, -2, 42, 24>>                                   *)
+(*     MAX_PROCESSES <- 7                                                     *)
+(* - Model_2:                                                                 *)
+(*     ID <- <<-5, 3, 8, 2>>                                                  *)
+(*     MAX_PROCESSES <- 4                                                     *)
+(*                                                                            *)
+(* - Models 3 and 4 lose messages, use SpecLoseMsg.                           *)
+(* - Model_3:                                                                 *)
+(*     ID <- <<-7, 7, -8, -10, -2, 42, 24>>                                   *)
+(*     MAX_PROCESSES <- 7                                                     *)
+(* - Model_4:                                                                 *)
+(*     ID <- <<-5, 3, 8, 2>>                                                  *)
+(*     MAX_PROCESSES <- 4                                                     *)
+(******************************************************************************)
 
 ================================================================================
