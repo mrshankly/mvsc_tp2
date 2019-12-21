@@ -5,7 +5,7 @@
     <stringAttribute key="distributedNetworkInterface" value="172.17.0.1"/>
     <intAttribute key="distributedNodesCount" value="1"/>
     <stringAttribute key="distributedTLC" value="off"/>
-    <intAttribute key="fpIndex" value="75"/>
+    <intAttribute key="fpIndex" value="129"/>
     <intAttribute key="maxHeapSize" value="80"/>
     <stringAttribute key="modelBehaviorInit" value=""/>
     <stringAttribute key="modelBehaviorNext" value=""/>
@@ -25,8 +25,8 @@
     <intAttribute key="modelEditorOpenTabs" value="0"/>
     <stringAttribute key="modelExpressionEval" value=""/>
     <listAttribute key="modelParameterConstants">
-        <listEntry value="MAX_PROCESSES;;3;0;0"/>
-        <listEntry value="ID;;&lt;&lt;-1, 10, 4&gt;&gt;;0;0"/>
+        <listEntry value="MAX_PROCESSES;;10;0;0"/>
+        <listEntry value="ID;;&lt;&lt;-7, 7, -8, -10, -2, -1, 3, 6, 1, -9&gt;&gt;;0;0"/>
     </listAttribute>
     <intAttribute key="numberOfWorkers" value="3"/>
     <stringAttribute key="result.mail.address" value=""/>

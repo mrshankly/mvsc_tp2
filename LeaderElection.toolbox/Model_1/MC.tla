@@ -2,15 +2,15 @@
 EXTENDS LeaderElection, TLC
 
 \* CONSTANT definitions @modelParameterConstants:0MAX_PROCESSES
-const_157670750840992000 == 
-3
+const_157693971785460000 == 
+10
 ----
 
 \* CONSTANT definitions @modelParameterConstants:1ID
-const_157670750840993000 == 
-<<-1, 10, 4>>
+const_157693971785461000 == 
+<<-7, 7, -8, -10, -2, -1, 3, 6, 1, -9>>
 ----
 
 ================================================================================
 \* Modification History
-\* Created Wed Dec 18 22:18:28 WET 2019 by jm
+\* Created Sat Dec 21 14:48:37 WET 2019 by jm
