@@ -1,9 +1,9 @@
 ---------------------------- MODULE LeaderElection -----------------------------
 (******************************************************************************)
-(* Trabalho Prático 2 - MVSC 2019                                             *)
+(* Trabalho Prático 2 - MVSC 2019                                            *)
 (*                                                                            *)
 (* Realizado por:                                                             *)
-(*     João Marques - 48500,                                                  *)
+(*     João Marques - 48500,                                                 *)
 (*     Vicente Almeida - 47803                                                *)
 (*                                                                            *)
 (* In the following TLA file we specify a solution to the Leader Election     *)
@@ -16,8 +16,8 @@
 (* the highest id as the leader.                                              *)
 (*                                                                            *)
 (* The processes are arranged in a unidirectional circle (ring), so each one  *)
-(* only communicates with it's right neighbour and receives messages only     *)
-(* from its left neighbour. This communication is done by the exchange of two *)
+(* only communicates with it's right neighbor and receives messages only      *)
+(* from its left neighbor. This communication is done by the exchange of two  *)
 (* kinds of messages, M1 and M2, in phases. Each process can be in one of     *)
 (* three states: active, waiting or passive. Active processes can only        *)
 (* receive M1 messages, while waiting and passive processes can receive both. *)
@@ -47,9 +47,9 @@ ASSUME
     ID \in Seq(Int) /\ Len(ID) = MAX_PROCESSES
 
 (******************************************************************************)
-(* Represents the right neighbour or a given process p.                       *)
+(* Represents the right neighbor or a given process p.                        *)
 (******************************************************************************)
-neighbour(p) == 1 + (p % MAX_PROCESSES)
+neighbor(p) == 1 + (p % MAX_PROCESSES)
 
 (******************************************************************************)
 (* Sets of all messages of type M1 and M2, as described in the article.       *)
@@ -62,14 +62,14 @@ message2 == [type: {2}, number: Int]
 VARIABLES
     phase,      \* - The phase in which each process currently is.
     started,    \* - Indicates whether an active process has sent the initial M1
-                \*   message to its neighbour in its current phase.
+                \*   message to its neighbor in its current phase.
     state,      \* - State of a process, it can be active, waiting or passive.
     id,         \* - The number originally stored by a process.
     max,        \* - The accumulated maximum number stored by a process.
     terminated, \* - Flag indicating whether the algorithm has terminated or not.
     queue       \* - A function from processes to a sequence, where queue[p]
                 \*   representes the sequence of messages (preserves order) that
-                \*   a process p has received from its left neighbour.
+                \*   a process p has received from its left neighbor.
 
 vars == <<phase, started, state, id, max, queue, terminated>>
 
@@ -96,7 +96,7 @@ Init ==
     /\ terminated = FALSE
 
 (***************************************************************************)
-(* The process "p" sends an M1 type message to it's right neighbour.       *)
+(* The process "p" sends an M1 type message to it's right neighbor.        *)
 (* - Only active processes can perform this action.                        *)
 (* - Exactly one M1 message should be sent by the process, per phase. This *)
 (*   is ensured by the use of the variable started[p].                     *)
@@ -110,7 +110,7 @@ ActiveSendM1(p) ==
                phase   |-> phase[p],
                counter |-> 2^(phase[p])
            ]
-       IN queue' = [queue EXCEPT ![neighbour(p)] = Append(@, msg)] \* send message to neighbour
+       IN queue' = [queue EXCEPT ![neighbor(p)] = Append(@, msg)] \* send message to neighbor
     /\ UNCHANGED <<phase, state, id, max, terminated>>
 
 (***************************************************************************)
@@ -125,7 +125,7 @@ ActiveSendM1(p) ==
 (*   so, p becomes passive.                                                *)
 (*                                                                         *)
 (* - It is extremely important that active processes only receives M1      *)
-(*   messages after sending the M1 message to their neighbour. If this     *)
+(*   messages after sending the M1 message to their neighbor. If this      *)
 (*   order is not kept, an active process will become either waiting or    *)
 (*   passive and the action ActiveSendM1 will be disabled. This is         *)
 (*   equivalent to losing a message, which will make the protocol          *)
@@ -133,7 +133,7 @@ ActiveSendM1(p) ==
 (***************************************************************************)
 ActiveReceiveM1(p) ==
     \* Receive an M1 type message only if the process is active
-    \* and has sent the initial message to the right neighbour.
+    \* and has sent the initial message to the right neighbor.
     /\ state[p] = "active" /\ started[p] = TRUE
     /\ Len(queue[p]) > 0 /\ Head(queue[p]).type = 1
     /\ LET m1 == Head(queue[p])
@@ -146,7 +146,7 @@ ActiveReceiveM1(p) ==
               /\ state' = [state EXCEPT ![p] = "passive"] \* become passive
               /\ LET msg == [type |-> 2, number |-> max[p]]
                  IN queue' = [queue EXCEPT ![p] = Tail(@), \* remove message from the queue
-                                           ![neighbour(p)] = Append(@, msg)] \* send new message to neighbor
+                                           ![neighbor(p)] = Append(@, msg)] \* send new message to neighbor
               /\ UNCHANGED <<phase, started, id, max, terminated>>
 
 (***************************************************************************)
@@ -184,7 +184,7 @@ WaitingReceiveM2(p) ==
 (* m's counter.                                                            *)
 (*                                                                         *)
 (* - If m's number is higher or equal to p's maximum and m's counter is    *)
-(* lower or equal to one, then p stops being passive and starts waiting    *)
+(* lower or equal to 1, then p stops being passive and starts waiting      *)
 (* for a message to become active or passive again. p's phase jumps to the *)
 (* one contained within m and p forwards the m to it's neighbor, with      *)
 (* counter at 0.                                                           *)
@@ -201,19 +201,19 @@ PassiveReceiveM1(p) ==
               /\ IF m1.counter > 1 THEN
                      /\ LET msg == [m1 EXCEPT !.counter = @ - 1] \* create an equal M1 message but with counter - 1
                         IN queue' = [queue EXCEPT ![p] = Tail(@), \* remove message from the queue
-                                                  ![neighbour(p)] = Append(@, msg)] \* send new message to neighbour
+                                                  ![neighbor(p)] = Append(@, msg)] \* send new message to neighbor
                      /\ UNCHANGED <<phase, started, state, id, terminated>>
                  ELSE
                      /\ state' = [state EXCEPT ![p] = "waiting"] \* become waiting
                      /\ phase' = [phase EXCEPT ![p] = m1.phase] \* update phase
                      /\ LET msg == [m1 EXCEPT !.counter = 0] \* create an equal M1 message buth with counter = 0
                         IN queue' = [queue EXCEPT ![p] = Tail(@), \* remove message from the queue
-                                                  ![neighbour(p)] = Append(@, msg)] \* send new message to neighbour
+                                                  ![neighbor(p)] = Append(@, msg)] \* send new message to neighbor
                      /\ UNCHANGED <<started, id, terminated>>
           ELSE
               /\ LET msg == [m1 EXCEPT !.counter = 0] \* create an equal M1 message buth with counter = 0
                  IN queue' = [queue EXCEPT ![p] = Tail(@), \* remove message from the queue
-                                           ![neighbour(p)] = Append(@, msg)] \* send new message to neighbour
+                                           ![neighbor(p)] = Append(@, msg)] \* send new message to neighbor
               /\ UNCHANGED <<phase, started, id, max, state, terminated>>
 
 (***************************************************************************)
@@ -225,7 +225,7 @@ PassiveReceiveM1(p) ==
 (* - If m's number is lower than p's maximum, then the message is ignored  *)
 (*                                                                         *)
 (* - If m's number is higher than p's maximum, then p forwards the message *)
-(*   to it's neighbour                                                     *)
+(*   to it's neighbor                                                      *)
 (***************************************************************************)
 PassiveReceiveM2(p) ==
     /\ state[p] = "passive"
@@ -240,7 +240,7 @@ PassiveReceiveM2(p) ==
               /\ UNCHANGED <<phase, started, state, id, max, terminated>>
           ELSE
               /\ queue' = [queue EXCEPT ![p] = Tail(@), \* remove message from the queue
-                                        ![neighbour(p)] = Append(@, m2)] \* forward message to neighbour
+                                        ![neighbor(p)] = Append(@, m2)] \* forward message to neighbor
               /\ UNCHANGED <<phase, started, state, id, max, terminated>>
 
 --------------------------------------------------------------------------------
